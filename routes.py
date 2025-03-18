@@ -7,14 +7,14 @@ from services.base_service import create_vacancy, get_vacancy, update_vacancy, d
 from schemas.base_schema import VacancyCreate, VacancyResponse, VacancyUpdate
 from config import get_db
 import jwt
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordRequestForm
 from datetime import datetime, timedelta
 
 router = APIRouter()
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
-@router.post("/login")
+@router.post("/api/v1/login")
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = db.query(User).filter(User.username == form_data.username).first()
     if not user or user.password_hash != form_data.password:
@@ -24,7 +24,7 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@router.post("/refresh")
+@router.post("/api/v1/refresh")
 def refresh_token(token: str = Security(oauth2_scheme)):
     payload = verify_token(token)
     new_token = create_access_token(data={"sub": payload["sub"]})
