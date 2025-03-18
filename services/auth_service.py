@@ -3,10 +3,11 @@ import jwt
 from datetime import datetime, timedelta
 from fastapi import HTTPException, Security
 
-SECRET_KEY = "your_secret_key"
+SECRET_KEY = "ae0f85fbd86542121ab60043512f6086f105f5028907e15881daa23c8c0289ef"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
+
 
 def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode = data.copy()
@@ -15,8 +16,9 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
     else:
         expire = datetime.utcnow() + timedelta(minutes=15)
     to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    encoded_jwt = jwt.encode(to_encode, key=SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
+
 
 def verify_token(token: str = Security(oauth2_scheme)):
     try:

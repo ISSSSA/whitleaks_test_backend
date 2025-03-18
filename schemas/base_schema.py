@@ -1,11 +1,14 @@
 from pydantic import BaseModel
 from typing import Optional
 
+
 class VacancyBase(BaseModel):
     hh_id: str
 
+
 class VacancyCreate(VacancyBase):
     hh_id: str
+
 
 class VacancyUpdate(BaseModel):
     hh_id: Optional[str]
@@ -14,9 +17,11 @@ class VacancyUpdate(BaseModel):
     company_logo: Optional[str]
     vacancy_description: Optional[str]
     status: Optional[str]
+    token: str
 
     class Config:
         orm_mode = True
+
 
 class VacancyResponse(BaseModel):
     id: int
