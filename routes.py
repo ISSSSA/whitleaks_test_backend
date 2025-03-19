@@ -1,5 +1,3 @@
-import os
-
 from fastapi import APIRouter, Depends, HTTPException, Security
 from sqlalchemy.orm import Session
 from models.base_models import User
@@ -10,11 +8,9 @@ from config import get_db
 import jwt
 from fastapi.security import OAuth2PasswordRequestForm
 from datetime import timedelta
-from dotenv import load_dotenv
 
-load_dotenv()
 router = APIRouter()
-ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
 @router.post("/api/v1/login")
@@ -24,6 +20,7 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
         raise HTTPException(status_code=401, detail="Incorrect username or password")
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(data={"sub": user.username}, expires_delta=access_token_expires)
+    print({"access_token": access_token, "token_type": "bearer"})
     return {"access_token": access_token, "token_type": "bearer"}
 
 
