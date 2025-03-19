@@ -11,13 +11,12 @@ class VacancyCreate(VacancyBase):
 
 
 class VacancyUpdate(BaseModel):
-    hh_id: Optional[str]
+    id: int
     company_name: Optional[str]
     company_address: Optional[str]
     company_logo: Optional[str]
     vacancy_description: Optional[str]
     status: Optional[str]
-    token: str
 
     class Config:
         orm_mode = True

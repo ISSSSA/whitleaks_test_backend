@@ -31,7 +31,7 @@ def get_vacancy(db: Session, vacancy_id: int):
 
 
 def update_vacancy(db: Session, vacancy_data: VacancyUpdate):
-    vacancy = db.query(Vacancy).filter(Vacancy.hh_id == vacancy_data.hh_id).first()
+    vacancy = db.query(Vacancy).filter(Vacancy.id == vacancy_data.id).first()
     if not vacancy:
         return {"error": "Vacancy not found"}
 

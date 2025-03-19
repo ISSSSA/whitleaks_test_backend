@@ -48,7 +48,7 @@ def get_vacancy_route(vacancy_id: int, db: Session = Depends(get_db), token: dic
     return vacancy
 
 
-@router.put("/update", response_model=VacancyUpdate)
+@router.put("/api/v1/vacancy/update", response_model=VacancyUpdate)
 def update_vacancy_endpoint(vacancy_data: VacancyUpdate, db: Session = Depends(get_db),
                             token: dict = Depends(verify_token)
                             ):
