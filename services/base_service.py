@@ -2,8 +2,11 @@ from sqlalchemy.orm import Session
 from models.base_models import Vacancy
 from schemas.base_schema import VacancyCreate, VacancyUpdate
 import requests
+import os
+from dotenv import load_dotenv
 
-HH_API_URL = "https://api.hh.ru/vacancies/"
+load_dotenv()
+HH_API_URL = os.getenv("HH_API_URL")
 
 
 def create_vacancy(db: Session, vacancy_data: VacancyCreate):

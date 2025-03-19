@@ -1,6 +1,7 @@
+import os
+
 from fastapi import APIRouter, Depends, HTTPException, Security
 from sqlalchemy.orm import Session
-
 from models.base_models import User
 from services.auth_service import create_access_token, verify_token, oauth2_scheme
 from services.base_service import create_vacancy, get_vacancy, update_vacancy, delete_vacancy
@@ -8,10 +9,12 @@ from schemas.base_schema import VacancyCreate, VacancyResponse, VacancyUpdate
 from config import get_db
 import jwt
 from fastapi.security import OAuth2PasswordRequestForm
-from datetime import datetime, timedelta
+from datetime import timedelta
+from dotenv import load_dotenv
 
+load_dotenv()
 router = APIRouter()
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")
 
 
 @router.post("/api/v1/login")
